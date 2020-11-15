@@ -1,12 +1,13 @@
 module.exports = {
-  future: {
-    // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
-  },
+  future: {},
   purge: [],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        0.5: "0.125rem",
+      },
+    },
   },
   variants: {},
   plugins: [],
-}
+};
