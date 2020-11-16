@@ -21,10 +21,10 @@ const ItemList = (props: {
               className="doneCheck"
             />
           ) : (
-            <hr className="lineOver" />
+            null
           )}
 
-          <h1 className="itemTitle">{item.title}</h1>
+          <h1 className={`itemTitle ${props.done ? 'line-through' : null}`}>{item.title}</h1>
           {!props.done ? (
             <div>
               <button
