@@ -35,6 +35,9 @@
 .doneCheck {
     @apply w-4 h-4 mr-1
 }
+.addView {
+    @apply p-10
+}
 .listItems {
     @apply  rounded-lg shadow-md bg-gray-100 px-4 py-4 align-middle m-2 w-full h-12 flex  flex-row place-items-center
 }
