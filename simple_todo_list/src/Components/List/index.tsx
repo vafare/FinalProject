@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { todoItem } from "../../types/types";
 
-const ItemList = (props: any) => {
-  const items = useState(props.items);
+const ItemList = (props: {
+  items: Array<todoItem>;
+  makeCompelete?: any;
+  done: boolean;
+  deleteItems?: any;
+}) => {
+  const items: todoItem[] = props.items;
   return (
     <ul className="rootItemViews">
       {items.map((item: any) => (
@@ -24,7 +30,7 @@ const ItemList = (props: any) => {
               <button
                 className="deleteBtn"
                 onClick={() => {
-                  props.deleteItema(item);
+                  props.deleteItems(item);
                 }}
               >
                 <FontAwesomeIcon icon={faTimes} size={"sm"} color={"red"} />
