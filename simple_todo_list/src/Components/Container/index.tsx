@@ -4,6 +4,7 @@ import { todoItem } from "../../types/types";
 import ItemList from "../List/index";
 import {
   addItem,
+  completeItem,
   deleteItem,
 } from "../../redux/actions";
 const Container = () => {
@@ -26,6 +27,12 @@ const Container = () => {
     setReady(store.getState().itemsReady);
   }
   
+
+  const makeItemComplete = useCallback((item: todoItem) => {
+    store.dispatch(completeItem(item));
+    setComplete(store.getState().itemsDone);
+    setReady(store.getState().itemsReady);
+  }, []);
 
   return (
     <div className="rootContainer">
@@ -52,9 +59,9 @@ const Container = () => {
         </div>
       </div>
       <div className="parrentView">
-        <ItemList items={ready} deleteItems={deleteItemList} done={false} />
+        <ItemList items={ready} deleteItems={deleteItemList} makeCompelete={makeItemComplete} done={false} />
         <hr className="seprateLine" />
-        <ItemList items={complete} done={true} />
+        <ItemList items={complete}  done={true} />
       </div>
     </div>
   );
