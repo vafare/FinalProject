@@ -1,38 +1,12 @@
 import React ,{useState} from "react";
+import store from "../../redux/store/store"
 import ItemList from "../List/index";
 
 const Container = () => {
   const [subject, setSubject] = useState("");
+  const [ready, setReady] = useState(store.getState().itemsReady);
+  const [complete, setComplete] = useState(store.getState().itemsDone);
 
-  const readyItems = [
-    {
-      title: "Buy bread",
-      compeleted: false,
-    },
-    {
-      title: "Buy pepsi",
-      compeleted: false,
-    },
-    {
-      title: "Buy Vegtables",
-      compeleted: false,
-    },
-    {
-      title: "Buy Meat",
-      compeleted: false,
-    },
-  ];
-
-  const doneItems = [
-    {
-      title: "go to the office",
-      compeleted: true,
-    },
-    {
-      title: "Pay to friend",
-      compeleted: true,
-    },
-  ];
 
   return (
     <div className="rootContainer">
@@ -54,9 +28,9 @@ const Container = () => {
         </div>
       </div>
       <div className="parrentView">
-        <ItemList items={readyItems} done={false} />
+        <ItemList items={ready} done={false} />
         <hr className="seprateLine" />
-        <ItemList items={doneItems} done={true} />
+        <ItemList items={complete} done={true} />
       </div>
     </div>
   );
