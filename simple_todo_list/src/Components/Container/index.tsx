@@ -3,6 +3,7 @@ import store from "../../redux/store/store"
 import { todoItem } from "../../types/types";
 import ItemList from "../List/index";
 import {
+  addItem,
   deleteItem,
 } from "../../redux/actions";
 const Container = () => {
@@ -15,6 +16,16 @@ const Container = () => {
     setReady(store.getState().itemsReady);
   }, []);
 
+  const addNewItem = ()=>{
+    store.dispatch(
+      addItem({
+        title: subject,
+        compeleted: false,
+      })
+    );
+    setReady(store.getState().itemsReady);
+  }
+  
 
   return (
     <div className="rootContainer">
@@ -28,7 +39,12 @@ const Container = () => {
           />
           <button
             className="btn"
-            
+            onClick={() => {
+              if(subject.length > 0 ){
+                addNewItem()
+              }
+              
+            }}
           >
             {" "}
             +
