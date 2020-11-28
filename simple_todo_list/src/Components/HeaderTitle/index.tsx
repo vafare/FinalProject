@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { memo } from "react";
-import { faSortAlphaDown } from "@fortawesome/free-solid-svg-icons";
+import { faSortAlphaDown, faSortAlphaDownAlt } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderTitle = (props: {
   sorting: any;
   done : boolean;
+  sortType : string;
 }) =>{
   
   return (
@@ -12,7 +13,7 @@ const HeaderTitle = (props: {
       <button onClick={()=>{
         props.sorting(props.done)
       }}>
-        <FontAwesomeIcon className="headerIcon" icon={faSortAlphaDown} />
+        <FontAwesomeIcon icon={props.sortType === 'z-a' ? faSortAlphaDownAlt : faSortAlphaDown} />
       </button>
     </div>
   );

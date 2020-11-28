@@ -5,16 +5,26 @@ import ItemList from "../List/index";
 import { addItem, completeItem, deleteItem } from "../../redux/actions";
 import _ from "lodash";
 import HeaderTitle from "../HeaderTitle";
+import * as Globlas from "../Globals/index";
 
 const Container = () => {
   const [subject, setSubject] = useState("");
   const [ready, setReady] = useState(store.getState().itemsReady);
   const [complete, setComplete] = useState(store.getState().itemsDone);
+  const [todoSortType, setTodoSortType] = useState(Globlas.defaultSort);
+  const [completeSortType, setCompleteSortType] = useState(Globlas.defaultSort);
 
-  const deleteItemList = useCallback((item: todoItem) => {
-    store.dispatch(deleteItem(item));
-    setReady(store.getState().itemsReady);
-  }, []);
+  const deleteItemList = useCallback(
+    (item: todoItem) => {
+      store.dispatch(deleteItem(item));
+      if (todoSortType !== Globlas.defaultSort) {
+        setReady(sorting(false, todoSortType));
+      } else {
+        setReady(store.getState().itemsReady);
+      }
+    },
+    [todoSortType]
+  );
 
   const addNewItem = () => {
     store.dispatch(
@@ -24,33 +34,90 @@ const Container = () => {
       })
     );
     setSubject("");
-    setReady(store.getState().itemsReady);
-  };
 
-  const makeItemComplete = useCallback((item: todoItem) => {
-    store.dispatch(completeItem(item));
-    setComplete(store.getState().itemsDone);
-    setReady(store.getState().itemsReady);
-  }, []);
-
-  const sorting = (done: boolean) => {
-    if (done) {
-      return _.sortBy(store.getState().itemsDone, function (item: todoItem) {
-        return item.title.toLowerCase();
-      });
+    if (todoSortType !== Globlas.defaultSort) {
+      setReady(sorting(false, todoSortType));
     } else {
-      return _.sortBy(store.getState().itemsReady, function (item: todoItem) {
-        return item.title.toLowerCase();
-      });
+      setReady(store.getState().itemsReady);
     }
   };
-  const sortList = useCallback((done: boolean) => {
+
+  const makeItemComplete = useCallback(
+    (item: todoItem) => {
+      store.dispatch(completeItem(item));
+
+      if (todoSortType !== Globlas.defaultSort) {
+        setComplete(sorting(true, completeSortType));
+        setReady(sorting(false, todoSortType));
+      } else {
+        setReady(store.getState().itemsReady);
+        setComplete(store.getState.itemsDone);
+      }
+    },
+    [todoSortType, completeSortType]
+  );
+
+  const sorting = (done: boolean, sortType: string) => {
     if (done) {
-      setComplete(sorting(done));
+      if (sortType === Globlas.zaSort) {
+        return _.sortBy(store.getState().itemsDone, function (item: todoItem) {
+          return item.title.toLowerCase();
+        }).reverse();
+      } else {
+        return _.sortBy(store.getState().itemsDone, function (item: todoItem) {
+          return item.title.toLowerCase();
+        });
+      }
     } else {
-      setReady(sorting(done));
+      if (sortType === Globlas.zaSort) {
+        return _.sortBy(store.getState().itemsReady, function (item: todoItem) {
+          return item.title.toLowerCase();
+        }).reverse();
+      } else {
+        return _.sortBy(store.getState().itemsReady, function (item: todoItem) {
+          return item.title.toLowerCase();
+        });
+      }
     }
-  }, []);
+  };
+  const sortList = useCallback(
+    (done: boolean) => {
+      if (done) {
+        switch (completeSortType) {
+          case Globlas.azSort:
+            setCompleteSortType(Globlas.zaSort);
+            setComplete(sorting(done, Globlas.zaSort));
+            break;
+          case Globlas.zaSort:
+            setCompleteSortType(Globlas.azSort);
+            setComplete(sorting(done, Globlas.azSort));
+            break;
+
+          default:
+            setCompleteSortType(Globlas.azSort);
+            setComplete(sorting(done, Globlas.defaultSort));
+            break;
+        }
+      } else {
+        switch (todoSortType) {
+          case Globlas.azSort:
+            setTodoSortType(Globlas.zaSort);
+            setReady(sorting(done, Globlas.zaSort));
+            break;
+          case Globlas.zaSort:
+            setTodoSortType(Globlas.azSort);
+            setReady(sorting(done, Globlas.azSort));
+            break;
+
+          default:
+            setTodoSortType(Globlas.azSort);
+            setReady(sorting(done, Globlas.defaultSort));
+            break;
+        }
+      }
+    },
+    [todoSortType, completeSortType]
+  );
 
   return (
     <div className="rootContainer">
@@ -77,7 +144,7 @@ const Container = () => {
         </div>
       </div>
       <div className="parrentView">
-        <HeaderTitle sorting={sortList} done={false} />
+        <HeaderTitle sorting={sortList} done={false} sortType={todoSortType} />
         <ItemList
           items={ready}
           deleteItems={deleteItemList}
@@ -85,7 +152,11 @@ const Container = () => {
           done={false}
         />
         <hr className="seprateLine" />
-        <HeaderTitle sorting={sortList} done={true} />
+        <HeaderTitle
+          sorting={sortList}
+          done={true}
+          sortType={completeSortType}
+        />
         <ItemList items={complete} done={true} />
       </div>
     </div>

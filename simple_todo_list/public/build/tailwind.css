@@ -656,9 +656,6 @@ video {
   color: rgba(99, 179, 237, var(--text-opacity))
 }
 
-.headerIcon {
-}
-
 .btn {
   --text-opacity: 1;
   color: #fff;
