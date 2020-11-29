@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+
+.seprateLine{
+    @apply h-0.5 bg-gray-600 shadow-xl w-1/7 mt-4 mb-4
+}
+.rootContainer{
+    @apply w-screen 
+}
+.root{
+    @apply bg-white
+}
+.topSection{
+    @apply w-auto ml-12 h-16 flex items-center justify-start text-xl text-gray-800  font-bold
+}
+.inputFields{
+    @apply h-10 flex-1 rounded-lg place-self-center p-2 shadow-lg
+}
+.headerTitle{
+    @apply text-xl  text-blue-400
+}
+.btn {
+    @apply   text-white bg-indigo-500 rounded-full w-12 h-12  font-semibold  ml-2 shadow-md ;
+}
+.btn:hover{
+    @apply bg-indigo-800 rounded-full w-12 h-12  font-semibold ml-2 shadow-md
+}
+.sectionDivs {
+    @apply  flex items-center flex-col flex-1  justify-center m-4 
+
+}
+.doneCheck {
+    @apply w-4 h-4 mr-1
+}
+.addView {
+    @apply p-10
+}
+.listItems {
+    @apply  rounded-lg shadow-md bg-gray-100 px-4 py-4 align-middle m-2 w-full h-12 flex  flex-row place-items-center
+}
+.rootItemViews{
+    @apply  align-middle place-items-center flex flex-1 flex-col
+}
+.parrentView{
+    @apply flex flex-col items-start justify-items-center mt-6 ml-12 
+}
+.deleteBtn{
+    @apply ml-0 px-3 py-0 
+}
+.itemTitle {
+    @apply flex-1 text-left
+}
+.deleteBtn:hover{
+    @apply bg-gray-300 
+}
+/* @screen xl {
+    .parrentView{
+        @apply flex flex-col items-center justify-items-center mt-6 ml-12 
+    }   
+} */
+@tailwind utilities;
+
