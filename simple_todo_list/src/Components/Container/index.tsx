@@ -47,11 +47,16 @@ const Container = () => {
       store.dispatch(completeItem(item));
 
       if (todoSortType !== Globlas.defaultSort) {
-        setComplete(sorting(true, completeSortType));
         setReady(sorting(false, todoSortType));
       } else {
         setReady(store.getState().itemsReady);
-        setComplete(store.getState.itemsDone);
+        
+      }
+
+      if(completeSortType !== Globlas.defaultSort){
+        setComplete(sorting(true, completeSortType));
+      }else {
+        setComplete(store.getState().itemsDone);
       }
     },
     [todoSortType, completeSortType]
